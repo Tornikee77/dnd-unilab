@@ -1,3 +1,4 @@
+import { useDroppable } from "@dnd-kit/core";
 import { columnType, Task } from "../types";
 import TaskCard from "./TaskCard";
 
@@ -7,10 +8,13 @@ type ColumnProps = {
 };
 
 const Column = ({ column, tasks }: ColumnProps) => {
+  const { setNodeRef } = useDroppable({
+    id: column.id,
+  });
   return (
     <div className="flex flex-col bg-neutral-800 p-4 rounded-lg w-80">
       <h2 className="mb-4 font-semibold text-neutral-100">{column.title}</h2>
-      <div className="flex flex-col flex-1 gap-4">
+      <div ref={setNodeRef} className="flex flex-col flex-1 gap-4">
         {tasks.map((eachTask) => {
           return <TaskCard key={eachTask.id} task={eachTask} />;
         })}
